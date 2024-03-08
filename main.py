@@ -2,7 +2,7 @@ from pygame import *
 from math import *
 
 #Se importan las clases y demás
-from GameEntities import Player
+from GameEntities import Player, Enemies
 
 #Se inicia el programa
 init()
@@ -28,6 +28,7 @@ bullet_sprites = "Assets/laser_beam.png"
 #Objetos
 All_sprite_in_game = sprite.Group()
 player = Player(player_sprite, bullet_sprites, 500, 500, 40, 40, 10)
+enemie = Enemies("Assets/circular_enemy.png", bullet_sprites, 300, 300, 40, 40, 10, "enemigo_patron_circular")
 #----------------------------
 
 #Logica de los niveles o pantallas
@@ -51,7 +52,9 @@ while running:
     mouse_pos = mouse.get_pos()
 
     player.update(player_sprite, mouse_pos, screen_size)
+    enemie.update(All_sprite_in_game)
     screen.blit(player.image, player.rect)
+    screen.blit(enemie.image, enemie.rect)
     All_sprite_in_game.update(screen_rect)
     #-----------------
 

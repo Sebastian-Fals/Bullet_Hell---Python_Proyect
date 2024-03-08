@@ -2,7 +2,7 @@ from pygame import *
 from math import *
 
 class Bullet(sprite.Sprite):
-    def __init__(self, location, angle, sprite):
+    def __init__(self, location, angle, sprite, speed):
         super().__init__()
         self.image = image.load(sprite).convert_alpha()
         self.image = transform.scale(self.image, (20, 20))
@@ -12,7 +12,7 @@ class Bullet(sprite.Sprite):
         self.rect = self.image.get_rect(center = location)
         self.move = [self.rect.x, self.rect.y]
         #Se calcula la velocidad en X y en Y respectivamente
-        self.speed_magnitude = 20
+        self.speed_magnitude = speed
         self.speed = (self.speed_magnitude* cos(self.angle),
                       self.speed_magnitude* sin(self.angle))
         
