@@ -19,16 +19,19 @@ WHITE = (255, 255, 255, 255)
 BLACK = (0, 0, 0, 0)
 DARK_BLUE = (0, 1, 35, 14)
 #----------------------------
-
+#Grupos
+bullets = sprite.Group()
+enemies = sprite.Group()
+#----------------------------
 #Variables
 player_sprite = "Assets/tiny_ship14.png"
 bullet_sprites = "Assets/laser_beam.png"
 #----------------------------
 
 #Objetos
-All_sprite_in_game = sprite.Group()
 player = Player(player_sprite, bullet_sprites, 500, 500, 40, 40, 10)
 enemie = Enemies("Assets/circular_enemy.png", bullet_sprites, 300, 300, 40, 40, 10, "enemigo_patron_circular")
+enemies.add(enemie)
 #----------------------------
 
 #Logica de los niveles o pantallas
@@ -40,7 +43,7 @@ while running:
         if e.type == QUIT:
             running = False
         #Para que funcione el disparo
-        player.Shoot(e, All_sprite_in_game)
+        player.Shoot(e, bullets)
 
     screen.fill(DARK_BLUE)
 
@@ -48,21 +51,31 @@ while running:
 
     screen_rect = display.get_surface().get_rect()
 
-    #Posicion del mouse
+        #Posicion del mouse
     mouse_pos = mouse.get_pos()
 
+        #Logica de las colisiones
+    bullets_to_enemies = sprite.groupcollide(enemies, bullets, False, False)
+
+    for enemy, bullet in bullets_to_enemies.items():
+        for b in bullet:
+            if b.bullet_target == "enemies":
+                enemy.take_damage(1)
+                b.kill()
+
+        #Update de los objetos de la escena
     player.update(player_sprite, mouse_pos, screen_size)
-    enemie.update(All_sprite_in_game)
-    screen.blit(player.image, player.rect)
-    screen.blit(enemie.image, enemie.rect)
-    All_sprite_in_game.update(screen_rect)
+    enemies.update(bullets)
+    bullets.update(screen_rect)
     #-----------------
 
     #Configuración de la pantalla (In-Game)
-    All_sprite_in_game.draw(screen)
+    screen.blit(player.image, player.rect) #Se dibuja el player en pantalla
+    bullets.draw(screen)
+    enemies.draw(screen)
     display.flip()
-    #Control de los fps o cuadros por segundo
-    clock.tick(60)
+
+    clock.tick(60)#Control de los fps o cuadros por segundo
     #-----------------
 
 quit()
