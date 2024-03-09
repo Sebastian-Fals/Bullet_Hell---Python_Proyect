@@ -59,6 +59,7 @@ while running:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         #Logica de las colisiones
         #Colisiones de los enemigos con las balas
     bullets_to_enemies = sprite.groupcollide(enemies, bullets, False, False)
@@ -70,6 +71,8 @@ while running:
                 b.kill()
 
         #Update de los objetos de la escena
+=======
+>>>>>>> parent of 132c137 (Se agrega mecánica de matar a los enemigos y se optimiza el disparo)
 =======
 >>>>>>> parent of 132c137 (Se agrega mecánica de matar a los enemigos y se optimiza el disparo)
 =======
