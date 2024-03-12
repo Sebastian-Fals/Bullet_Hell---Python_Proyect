@@ -4,7 +4,7 @@ from math import *
 class Bullet(sprite.Sprite):
     def __init__(self, location, angle, sprite, speed, bullet_target):
         super().__init__()
-        self.image = image.load(sprite).convert_alpha()
+        self.image = sprite
         self.image = transform.scale(self.image, (20, 20))
         #Rota la bala hacia donde está viendo el player
         self.angle = radians(angle - 90)

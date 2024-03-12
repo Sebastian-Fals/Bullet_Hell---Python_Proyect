@@ -3,6 +3,7 @@ from math import *
 
 #Se importan las clases y demás
 from GameEntities import Player, Enemies
+from funciones import get_image
 
 #Se inicia el programa
 init()
@@ -23,14 +24,14 @@ DARK_BLUE = (0, 1, 35, 14)
 bullets = sprite.Group()
 enemies = sprite.Group()
 #----------------------------
-#Variables
-player_sprite = "Assets/tiny_ship14.png"
-bullet_sprites = "Assets/laser_beam.png"
+#Sprite sheets
+playerSheet = image.load("Assets/SpaceShip_sheet.png").convert_alpha()
+bulletsSheet = image.load("Assets/Bullets_sheet.png").convert_alpha()
 #----------------------------
 
 #Objetos
-player = Player(player_sprite, bullet_sprites, 500, 500, 40, 40, 10)
-enemie = Enemies("Assets/circular_enemy.png", bullet_sprites, 300, 300, 40, 40, 10, "enemigo_patron_circular")
+player = Player(get_image(playerSheet, 0, 52, 52, 1, BLACK), get_image(bulletsSheet, 0, 24, 24, 1, BLACK), (500, 500), 40, 40, 10)
+enemie = Enemies(image.load("Assets/circular_enemy.png").convert_alpha(), get_image(bulletsSheet, 1, 24, 24, 1, BLACK), (300, 300), 40, 40, 10, "enemigo_patron_circular")
 enemies.add(enemie)
 #----------------------------
 
@@ -39,6 +40,8 @@ running = True
 #----------------------------
 
 while running:
+
+    #Event manager
     for e in event.get():
         if e.type == QUIT:
             running = False
@@ -64,7 +67,7 @@ while running:
                 b.kill()
 
         #Update de los objetos de la escena
-    player.update(player_sprite, mouse_pos, screen_size)
+    player.update(get_image(playerSheet, 0, 52, 52, 1, BLACK), mouse_pos, screen_size)
     enemies.update(bullets)
     bullets.update(screen_rect)
     #-----------------

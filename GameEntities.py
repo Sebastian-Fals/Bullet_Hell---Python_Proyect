@@ -6,21 +6,20 @@ from queue import *
 from BulletClass import Bullet
 
 class GameEntity(sprite.Sprite):
-    def __init__(self, sprite, bullet_sprite, posX, posY, sizeX, sizeY, vida):
+    def __init__(self, sprite, bullet_sprite, position, sizeX, sizeY, vida):
         super().__init__()
         self.sizeX = sizeX
         self.sizeY = sizeY
-        self.image = image.load(sprite).convert_alpha()
-        self.image = transform.scale(self.image, (self.sizeX, self.sizeY))
+        self.image = sprite
         self.rect = self.image.get_rect()
-        self.rect.center = (posX, posY)
+        self.rect.center = (position[0], position[1])
         self.vida = vida
         self.bullet_sprite = bullet_sprite
         self.screen_size = 0
 
 class Player(GameEntity):
-    def __init__(self, sprite, bullet_sprite, posX, posY, sizeX, sizeY, vida):
-        super().__init__(sprite, bullet_sprite, posX, posY, sizeX, sizeY, vida)
+    def __init__(self, sprite, bullet_sprite, position, sizeX, sizeY, vida):
+        super().__init__(sprite, bullet_sprite, position, sizeX, sizeY, vida)
         self.velocityX = 0
         self.velocityY = 0
         self.angle = 0
@@ -28,7 +27,7 @@ class Player(GameEntity):
         #Define a quien va a dañar la bala que se spawnea
         self.target = "enemies"
 
-    def update(self, sprite, mouse_pos, screen_rect):
+    def update(self, sprite,  mouse_pos, screen_rect):
         self.velocityX = 0
         self.velocityY = 0
         self.mouse_pos = mouse_pos
@@ -51,7 +50,7 @@ class Player(GameEntity):
 
         #Rotacion del personaje hacia el mouse
         self.angle = degrees(atan2((self.mouse_pos[1] - self.rect.centery), (self.mouse_pos[0] - self.rect.centerx))) + 90
-        self.image = image.load(sprite).convert_alpha()
+        self.image = sprite
         self.image = transform.rotate(self.image, - self.angle)
         self.rect = self.image.get_rect(center = self.rect.center)
 
@@ -86,8 +85,8 @@ class Player(GameEntity):
 
 #Esta clase es para todos los tipos de enemigos del juego
 class Enemies(GameEntity):
-    def __init__(self, sprite, bullet_sprite, posX, posY, sizeX, sizeY, vida, enemy_id):
-        super().__init__(sprite, bullet_sprite, posX, posY, sizeX, sizeY, vida)
+    def __init__(self, sprite, bullet_sprite, position, sizeX, sizeY, vida, enemy_id):
+        super().__init__(sprite, bullet_sprite, position, sizeX, sizeY, vida)
         self.enemy_id = enemy_id
         #Bullet interval sirve para calcular el intervalo de disparo de las balas
         self.bullet_interval = 0
