@@ -1,3 +1,4 @@
+import pickle
 from pygame import *
 
 #Esta funcion sirve para localizar un sprite en una prite sheet y convertirlo en una imagen
@@ -8,6 +9,11 @@ def get_image(sheet, frame, width, height, colour):
     return img.convert_alpha()
 
 #Esta funcion calcula un numero según el porcentaje de un tamaño que le pasemos
-def responsiveSizeAndPosition(displaySize, XorY, number):
-    pixelSize = number * displaySize[XorY]/100
-    return float(pixelSize)
+def tamanoDinamico(tamano, porcentaje):
+    tamanoDinamico = porcentaje * tamano/100
+    return tamanoDinamico
+
+# Funcion para escribir en el archivo
+def save(archivo_binario, variables):
+    with open(archivo_binario, "wb") as f:
+            pickle.dump(variables, f)

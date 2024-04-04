@@ -4,7 +4,7 @@ from math import *
 from threading import *
 from queue import *
 from BulletClass import Bullet
-from funciones import responsiveSizeAndPosition
+from funciones import tamanoDinamico
 
 class GameEntity(sprite.Sprite):
     def __init__(self, sprite, bullet_sprite, position, size, vida, screen_size):
@@ -48,13 +48,13 @@ class Player(GameEntity):
 
         #Movimiento con WASD
         if teclas[K_w]:
-            self.velocityY = -responsiveSizeAndPosition(self.screen_size, 0, 0.46875)
+            self.velocityY = -tamanoDinamico(self.screen_size[0], 0.46875)
         if teclas[K_s]:
-            self.velocityY = responsiveSizeAndPosition(self.screen_size, 0, 0.46875)
+            self.velocityY = tamanoDinamico(self.screen_size[0], 0.46875)
         if teclas[K_a]:
-            self.velocityX = -responsiveSizeAndPosition(self.screen_size, 0, 0.46875)
+            self.velocityX = -tamanoDinamico(self.screen_size[0], 0.46875)
         if teclas[K_d]:
-            self.velocityX = responsiveSizeAndPosition(self.screen_size, 0, 0.46875)
+            self.velocityX = tamanoDinamico(self.screen_size[0], 0.46875)
 
         self.rect.x += self.velocityX * deltaTime
         self.rect.y += self.velocityY * deltaTime
@@ -97,7 +97,7 @@ class Player(GameEntity):
     def Shoot(self, event, objects):
         if event.type == MOUSEBUTTONDOWN and event.button == 1 and not self.isDead:
             self.shootSound.play()
-            objects.add(Bullet(self.rect.center, self.angle, self.bullet_sprite, responsiveSizeAndPosition(self.screen_size, 0, 1.5625), self.target, (responsiveSizeAndPosition(self.screen_size, 0, 1.5625), responsiveSizeAndPosition(self.screen_size, 0, 1.5625))))
+            objects.add(Bullet(self.rect.center, self.angle, self.bullet_sprite, tamanoDinamico(self.screen_size[0], 1.5625), self.target, (tamanoDinamico(self.screen_size[0], 1.5625), tamanoDinamico(self.screen_size[0], 1.5625))))
 
 #Esta clase es para todos los tipos de enemigos del juego
 class Enemies(GameEntity):
@@ -130,7 +130,7 @@ class Enemies(GameEntity):
         if self.enemy_id == "enemigo_patron_circular":
             #Se configuran las opciones iniciales del enemigo
             self.image = image.load("Assets/Images/circular_enemy.png").convert_alpha()
-            self.image = transform.scale(self.image, (responsiveSizeAndPosition(self.screen_size, 0, 3.125), responsiveSizeAndPosition(self.screen_size, 0, 3.125)))
+            self.image = transform.scale(self.image, (tamanoDinamico(self.screen_size[0], 3.125), tamanoDinamico(self.screen_size[0], 3.125)))
             self.rect = self.image.get_rect()
             self.rect.center = self.position
             self.bullet_interval = 0.3
@@ -140,7 +140,7 @@ class Enemies(GameEntity):
         if self.enemy_id == "enemigo_patron_circular_alternado":
             #Se configuran las opciones iniciales del enemigo
             self.image = image.load("Assets/Images/circular_enemy.png").convert_alpha()
-            self.image = transform.scale(self.image, (responsiveSizeAndPosition(self.screen_size, 0, 3.125), responsiveSizeAndPosition(self.screen_size, 0, 3.125)))
+            self.image = transform.scale(self.image, (tamanoDinamico(self.screen_size[0], 3.125), tamanoDinamico(self.screen_size[0], 3.125)))
             self.rect = self.image.get_rect()
             self.rect.center = self.position
             self.bullet_interval = 0.3
@@ -150,7 +150,7 @@ class Enemies(GameEntity):
         if self.enemy_id == "enemigo_patron_espiral":
             #Se configuran las opciones iniciales del enemigo
             self.image = image.load("Assets/Images/circular_enemy.png").convert_alpha()
-            self.image = transform.scale(self.image, (responsiveSizeAndPosition(self.screen_size, 0, 3.125), responsiveSizeAndPosition(self.screen_size, 0, 3.125)))
+            self.image = transform.scale(self.image, (tamanoDinamico(self.screen_size[0], 3.125), tamanoDinamico(self.screen_size[0], 3.125)))
             self.rect = self.image.get_rect()
             self.rect.center = self.position
             self.bullet_interval = 0.3
@@ -160,7 +160,7 @@ class Enemies(GameEntity):
         if self.enemy_id == "enemigo_patron_espiral_alternado":
             #Se configuran las opciones iniciales del enemigo
             self.image = image.load("Assets/Images/circular_enemy.png").convert_alpha()
-            self.image = transform.scale(self.image, (responsiveSizeAndPosition(self.screen_size, 0, 3.125), responsiveSizeAndPosition(self.screen_size, 0, 3.125)))
+            self.image = transform.scale(self.image, (tamanoDinamico(self.screen_size[0], 3.125), tamanoDinamico(self.screen_size[0], 3.125)))
             self.rect = self.image.get_rect()
             self.rect.center = self.position
             self.bullet_interval = 0.3
@@ -170,7 +170,7 @@ class Enemies(GameEntity):
         if self.enemy_id == "enemigo_patron_estrella":
             #Se configuran las opciones iniciales del enemigo
             self.image = image.load("Assets/Images/circular_enemy.png").convert_alpha()
-            self.image = transform.scale(self.image, (responsiveSizeAndPosition(self.screen_size, 0, 3.125), responsiveSizeAndPosition(self.screen_size, 0, 3.125)))
+            self.image = transform.scale(self.image, (tamanoDinamico(self.screen_size[0], 3.125), tamanoDinamico(self.screen_size[0], 3.125)))
             self.rect = self.image.get_rect()
             self.rect.center = self.position
             self.bullet_interval = 1
@@ -180,7 +180,7 @@ class Enemies(GameEntity):
         if self.enemy_id == "enemigo_patron_spray":
             #Se configuran las opciones iniciales del enemigo
             self.image = image.load("Assets/Images/circular_enemy.png").convert_alpha()
-            self.image = transform.scale(self.image, (responsiveSizeAndPosition(self.screen_size, 0, 3.125), responsiveSizeAndPosition(self.screen_size, 0, 3.125)))
+            self.image = transform.scale(self.image, (tamanoDinamico(self.screen_size[0], 3.125), tamanoDinamico(self.screen_size[0], 3.125)))
             self.rect = self.image.get_rect()
             self.rect.center = self.position
             self.bullet_interval = 1
@@ -201,6 +201,7 @@ class Enemies(GameEntity):
             if now - self.ultimo_disparo > self.bullet_interval:
                 # Disparar balas en un hilo separado
                 shoot_thread = Thread(target=self.shoot, args=(objects,))
+                shoot_thread.daemon = True
                 shoot_thread.start()
                 self.ultimo_disparo = now
 
@@ -213,7 +214,7 @@ class Enemies(GameEntity):
     def shoot(self, objects):
         if self.enemy_id == "enemigo_patron_circular":
             for _ in range(self.bullet_vertices):
-                self.shoot_queue.put(Bullet(self.rect.center, self.angulo_actual, self.bullet_sprite[1], responsiveSizeAndPosition(self.screen_size, 0, 0.390625), self.target, (responsiveSizeAndPosition(self.screen_size, 0, 1.5625), responsiveSizeAndPosition(self.screen_size, 0, 1.5625))))
+                self.shoot_queue.put(Bullet(self.rect.center, self.angulo_actual, self.bullet_sprite[1], tamanoDinamico(self.screen_size[0], 0.390625), self.target, (tamanoDinamico(self.screen_size[0], 1.5625), tamanoDinamico(self.screen_size[0], 1.5625))))
                 self.angulo_actual += self.suma_del_angulo
 
             # Agregar las balas a la lista principal fuera del hilo
@@ -222,7 +223,7 @@ class Enemies(GameEntity):
 
         if self.enemy_id == "enemigo_patron_circular_alternado":
             for _ in range(self.bullet_vertices):
-                self.shoot_queue.put(Bullet(self.rect.center, self.angulo_actual, self.bullet_sprite[3], responsiveSizeAndPosition(self.screen_size, 0, 0.390625), self.target, (responsiveSizeAndPosition(self.screen_size, 0, 1.5625), responsiveSizeAndPosition(self.screen_size, 0, 1.5625))))
+                self.shoot_queue.put(Bullet(self.rect.center, self.angulo_actual, self.bullet_sprite[3], tamanoDinamico(self.screen_size[0], 0.390625), self.target, (tamanoDinamico(self.screen_size[0], 1.5625), tamanoDinamico(self.screen_size[0], 1.5625))))
                 self.angulo_actual += self.suma_del_angulo
             
             self.angulo_actual += self.suma_del_angulo * 1.5
@@ -233,10 +234,10 @@ class Enemies(GameEntity):
 
         if self.enemy_id == "enemigo_patron_espiral":
             for _ in range(self.bullet_vertices):
-                self.shoot_queue.put(Bullet(self.rect.center, self.angulo_actual, self.bullet_sprite[2], responsiveSizeAndPosition(self.screen_size, 0, 0.390625), self.target, (responsiveSizeAndPosition(self.screen_size, 0, 1.5625), responsiveSizeAndPosition(self.screen_size, 0, 1.5625))))
+                self.shoot_queue.put(Bullet(self.rect.center, self.angulo_actual, self.bullet_sprite[2], tamanoDinamico(self.screen_size[0], 0.390625), self.target, (tamanoDinamico(self.screen_size[0], 1.5625), tamanoDinamico(self.screen_size[0], 1.5625))))
                 self.angulo_actual += self.suma_del_angulo
 
-            self.angulo_actual += responsiveSizeAndPosition(self.screen_size, 0, 1.5625)
+            self.angulo_actual += tamanoDinamico(self.screen_size[0], 1.5625)
 
             # Agregar las balas a la lista principal fuera del hilo
             while not self.shoot_queue.empty():
@@ -244,10 +245,10 @@ class Enemies(GameEntity):
         
         if self.enemy_id == "enemigo_patron_espiral_alternado":
             for _ in range(self.bullet_vertices):
-                self.shoot_queue.put(Bullet(self.rect.center, self.angulo_actual, self.bullet_sprite[6], responsiveSizeAndPosition(self.screen_size, 0, 0.390625), self.target, (responsiveSizeAndPosition(self.screen_size, 0, 1.5625), responsiveSizeAndPosition(self.screen_size, 0, 1.5625))))
+                self.shoot_queue.put(Bullet(self.rect.center, self.angulo_actual, self.bullet_sprite[6], tamanoDinamico(self.screen_size[0], 0.390625), self.target, (tamanoDinamico(self.screen_size[0], 1.5625), tamanoDinamico(self.screen_size[0], 1.5625))))
                 self.angulo_actual += self.suma_del_angulo
 
-            self.angulo_actual -= responsiveSizeAndPosition(self.screen_size, 0, 1.5625)
+            self.angulo_actual -= tamanoDinamico(self.screen_size[0], 1.5625)
 
             # Agregar las balas a la lista principal fuera del hilo
             while not self.shoot_queue.empty():
@@ -255,7 +256,7 @@ class Enemies(GameEntity):
         
         if self.enemy_id == "enemigo_patron_estrella":
             for _ in range(self.bullet_vertices):
-                self.shoot_queue.put(Bullet(self.rect.center, self.angulo_actual, self.bullet_sprite[5], responsiveSizeAndPosition(self.screen_size, 0, 0.1171875)*sin(50*self.angulo_actual * (pi/360)) + responsiveSizeAndPosition(self.screen_size, 0, 0.390625), self.target, (responsiveSizeAndPosition(self.screen_size, 0, 1.5625), responsiveSizeAndPosition(self.screen_size, 0, 1.5625))))
+                self.shoot_queue.put(Bullet(self.rect.center, self.angulo_actual, self.bullet_sprite[5], tamanoDinamico(self.screen_size[0], 0.1171875)*sin(50*self.angulo_actual * (pi/360)) + tamanoDinamico(self.screen_size[0], 0.390625), self.target, (tamanoDinamico(self.screen_size[0], 1.5625), tamanoDinamico(self.screen_size[0], 1.5625))))
                 self.angulo_actual += self.suma_del_angulo
             self.angulo_actual = 0
 
@@ -265,7 +266,7 @@ class Enemies(GameEntity):
         
         if self.enemy_id == "enemigo_patron_spray":
             for _ in range(self.bullet_vertices):
-                self.shoot_queue.put(Bullet(self.rect.center, self.angulo_actual, self.bullet_sprite[4], abs(sin(500*self.angulo_actual * (pi/360)) + responsiveSizeAndPosition(self.screen_size, 0, 0.390625)), self.target, (responsiveSizeAndPosition(self.screen_size, 0, 1.5625), responsiveSizeAndPosition(self.screen_size, 0, 1.5625))))
+                self.shoot_queue.put(Bullet(self.rect.center, self.angulo_actual, self.bullet_sprite[4], abs(sin(500*self.angulo_actual * (pi/360)) + tamanoDinamico(self.screen_size[0], 0.390625)), self.target, (tamanoDinamico(self.screen_size[0], 1.5625), tamanoDinamico(self.screen_size[0], 1.5625))))
                 self.angulo_actual += self.suma_del_angulo
             self.angulo_actual = 0
 

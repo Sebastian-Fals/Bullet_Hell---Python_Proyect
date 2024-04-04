@@ -3,7 +3,7 @@ from pygame import *
 from random import *
 from threading import *
 from GameEntities import Enemies
-from funciones import responsiveSizeAndPosition
+from funciones import tamanoDinamico
 
 class SpawnPoint():
     def __init__(self, position):
@@ -37,7 +37,7 @@ class EnemyGenerator():
         self.enemies_generated = 0  # Contador de enemigos generados
         self.actualwave = 1 #Control de la oleada actual
         self.waveInText = 1
-        self.waveFont = font.Font("Assets/Fonts/Minecraft.ttf", int(responsiveSizeAndPosition(screenSize, 1, 10)))
+        self.waveFont = font.Font("Assets/Fonts/Minecraft.ttf", int(tamanoDinamico(self.screenSize[1], 10)))
         self.waveText = self.waveFont.render("Wave " + str(self.waveInText), True, (255, 255, 255, 255))
         self.any_spawn_points_occupied = 0
 
@@ -45,11 +45,12 @@ class EnemyGenerator():
         self.any_spawn_points_occupied = all(spawn_point.canSpawn for spawn_point in self.spawnPoints)
         if self.any_spawn_points_occupied:
             self.waveText = self.waveFont.render("Wave " + str(self.waveInText), False, (255, 255, 255, 255))
-            self.screen.blit(self.waveText, self.waveText.get_rect(center = ((responsiveSizeAndPosition(self.screenSize, 0, 50), responsiveSizeAndPosition(self.screenSize, 1, 50)))))
+            self.screen.blit(self.waveText, self.waveText.get_rect(center = ((tamanoDinamico(self.screenSize[0], 50), tamanoDinamico(self.screenSize[1], 50)))))
             self.setDifficulty()
             self.enemies_generated = 0
             # Utilizar threading para generar enemigos sin bloquear el hilo principal
             enemy_thread = Thread(target=self.generateEnemies, args=(screen_size, ))
+            enemy_thread.daemon = True
             enemy_thread.start()
 
     def generateEnemies(self, screen_size):
