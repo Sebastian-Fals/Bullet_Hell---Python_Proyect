@@ -15,13 +15,8 @@ from Assets.Python.EnemyGenerator import EnemyGenerator, SpawnPoint
 from Assets.Python.UI_classes import Estrellas, Boton
 
 # Un path para todos los assets
-ASSETS: str = "Assets/"
-
-# Compruba si assets existe
-if os.path.exists("Assets"):
-    ASSETS = "Assets/"
-else:
-    ASSETS = "_internal/Assets/"
+meipass_path = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
+ASSETS: str = meipass_path + "/Assets/"
 
 #Se inicia el programa
 init()
