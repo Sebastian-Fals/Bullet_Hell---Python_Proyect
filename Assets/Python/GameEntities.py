@@ -190,10 +190,12 @@ class Enemies(GameEntity):
 
     def update(self, objects, deltaTime, screen_size):
         self.screen_size = screen_size
+        
         def ease_out(t):
             return 1.0 - (1.0 - t) * (1.0 - t)
+        
         if self.rect.center != self.final_position:
-            self.rect.centerx = math.lerp(self.rect.centerx, self.final_position[0],ease_out(0.1 * deltaTime))
+            self.rect.centerx = math.lerp(self.rect.centerx, self.final_position[0], ease_out(0.1 * deltaTime))
             self.rect.centery = math.lerp(self.rect.centery, self.final_position[1], ease_out(0.1 * deltaTime))
 
         #Esta condicional depende del tipo de enemigos que se genera
